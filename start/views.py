@@ -20,7 +20,7 @@ def index(request):
 def start(request):
     return HttpResponse("Hello, world. You're at the start start.")
 
-def start_view(request):
+def start_message_view(request):
     return JsonResponse({"message": "Hello, world. You're at the start start."})
 
 
@@ -60,3 +60,48 @@ def start_view(request):
         @method_decorator(login_required)
         def get(self, request, *args, **kwargs):
             return HttpResponse("This is a protected class-based view. You must be logged in to see this.")
+        
+
+
+
+def start_data_view(request, id=None, name=None, age=None, email=None):
+    data = {
+        "id": id,
+        "name": name,
+        "age": age,
+        "email": email
+    }
+    return JsonResponse(data)
+
+
+
+
+
+
+    # Car sell view
+    def sell_car_view(request):
+        if request.method == 'POST':
+            car_data = {
+                'make': request.POST.get('make'),
+                'model': request.POST.get('model'),
+                'year': request.POST.get('year'),
+                'price': request.POST.get('price'),
+                'description': request.POST.get('description'),
+            }
+            # Save car data to the database (this is a placeholder, replace with actual database logic)
+            # Example: Car.objects.create(**car_data)
+            return JsonResponse({"message": "Car listed for sale successfully!", "car_data": car_data})
+        return render(request, 'sell_car.html')
+
+    # Car buy view
+    def buy_car_view(request):
+        if request.method == 'GET':
+            # Fetch available cars from the database (this is a placeholder, replace with actual database logic)
+            # Example: cars = Car.objects.all()
+            cars = [
+                {"id": 1, "make": "Toyota", "model": "Camry", "year": 2020, "price": 20000},
+                {"id": 2, "make": "Honda", "model": "Civic", "year": 2019, "price": 18000},
+            ]
+            return JsonResponse({"available_cars": cars})
+        return HttpResponse("Invalid request method.", status=405)
+
