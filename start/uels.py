@@ -14,5 +14,5 @@ urlpatterns = [
     path('', index, name='index'),
     path('start/', start, name='start'),
     path('start_view/', start_view, name='start_view'),
-    path('start/start_view/', start_view, name='start_view'),
+
 ]
